@@ -1,12 +1,560 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intro</title>
+    <title>MotionTrace Pro - 스마트한 골프 스윙 분석</title>
+    <style>
+        /* Premium Dark Theme Variables */
+        :root {
+            --bg-color: #0B0E14;
+            --card-bg: #161A23;
+            --text-main: #FFFFFF;
+            --text-sub: #8B95A5;
+            --accent-blue: #2979FF;
+            --accent-green: #00E676;
+            --accent-orange: #FF9100;
+            --border-color: #262B38;
+            --gradient-text: linear-gradient(135deg, #2979FF 0%, #00E676 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(11, 14, 20, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--accent-blue);
+        }
+
+        .nav-btn {
+            background: var(--gradient-text);
+            color: white;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: transform 0.2s;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 150px 5% 100px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 30%, rgba(41, 121, 255, 0.15) 0%, rgba(11, 14, 20, 1) 60%);
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(0, 230, 118, 0.1);
+            color: var(--accent-green);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 230, 118, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-sub);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Concept Section (Comparison) */
+        .concept {
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .concept-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .concept-card h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .concept-card p {
+            color: var(--text-sub);
+        }
+
+        .card-trackman {
+            border-top: 4px solid var(--text-sub);
+        }
+
+        .card-motiontrace {
+            border-top: 4px solid var(--accent-green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-motiontrace::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(0, 230, 118, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 80px 5%;
+            background: #0F1219;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 60px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .f-card {
+            background: var(--bg-color);
+            padding: 32px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s;
+        }
+
+        .f-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .f-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(41, 121, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+        }
+
+        .f-card h4 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .f-card p {
+            color: var(--text-sub);
+            font-size: 15px;
+        }
+
+        /* Modes Section */
+        .modes {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mode-row {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .mode-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .mode-text {
+            flex: 1;
+        }
+
+        .mode-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .tag-dist {
+            background: rgba(41, 121, 255, 0.1);
+            color: var(--accent-blue);
+        }
+
+        .tag-tempo {
+            background: rgba(0, 230, 118, 0.1);
+            color: var(--accent-green);
+        }
+
+        .tag-putt {
+            background: rgba(255, 145, 0, 0.1);
+            color: var(--accent-orange);
+        }
+
+        .mode-text h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .mode-text p {
+            color: var(--text-sub);
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .mode-img {
+            flex: 1;
+            min-height: 500px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .img-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .img-mobile {
+            width: 260px; /* Increased for a more focused look */
+            height: auto; /* Allow natural aspect ratio */
+            border-radius: 28px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            border: 5px solid #1a1f2b;
+            transition: transform 0.3s;
+        }
+
+        .img-mobile:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        /* Hero Image */
+        .hero-img-container {
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .hero-img {
+            width: 280px;
+            border-radius: 32px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            border: 6px solid #1a1f2b;
+            transform: rotateX(10deg);
+        }
+
+        /* 3D Section */
+        .three-d {
+            padding: 100px 5%;
+            background: radial-gradient(circle at 50% 50%, rgba(41, 121, 255, 0.05) 0%, transparent 70%);
+        }
+
+        .three-d-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .three-d-img {
+            flex: 0.8; /* Reduced from 1.2 (~33% reduction in flex space) */
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            max-width: 400px; /* Added limit */
+        }
+
+        .three-d-img img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .three-d-text {
+            flex: 1;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 5%;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-sub);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mode-row,
+            .mode-row:nth-child(even) {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .mode-img {
+                width: 100%;
+                height: 300px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Welcome to Motion Trace Project</h1>
-    <p>This is the intro page.</p>
+
+    <nav>
+        <div class="logo">MotionTrace <span>Pro</span></div>
+        <a href="#download" class="nav-btn">앱 다운로드</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-label">스마트워치 골프 스윙 분석기</div>
+        <h1>공이 왜 이렇게 날아갔을까?<br>원인은 <span class="highlight">당신의 움직임</span>에 있습니다.</h1>
+        <p>비싼 런치 모니터 없이도 스마트워치 하나로 내 몸의 역학을 분석하세요.</p>
+        <p>필드, 연습장, 스크린 어디서든 당신의 전담 AI 코치가 되어 드립니다.</p>
+        <div class="hero-img-container">
+            <img src="freemode_01.jpg" alt="MotionTrace Pro App" class="hero-img">
+        </div>
+    </section>
+
+    <section class="concept">
+        <h2 class="section-title">결과보다 과정에 집중합니다</h2>
+        <div class="concept-grid">
+            <div class="concept-card card-trackman">
+                <h3 style="color: #ccc;">기존 런치 모니터</h3>
+                <p>수천만 원대의 장비들은 <strong>'공이 날아간 결과'</strong>를 보여주는 데 탁월합니다. 하지만 정작 그 샷을 만들어낸 내 몸의 타이밍과 리듬은 알려주지 않습니다.
+                </p>
+            </div>
+            <div class="concept-card card-motiontrace">
+                <h3 style="color: var(--accent-green);">MotionTrace Pro</h3>
+                <p>스마트워치를 통해 <strong>'사람의 움직임'</strong>을 직접 추적합니다. 트랙맨의 결과 데이터와 결합했을 때, 스윙의 근본적인 원인을 찾는 완벽한 시너지를 발휘합니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2 class="section-title">4가지 핵심 지표 측정</h2>
+        <div class="feature-grid">
+            <div class="f-card">
+                <div class="f-icon">🚀</div>
+                <h4>손 최대 가속도 (G)</h4>
+                <p>임팩트 순간 에너지가 얼마나 폭발적으로 전달되는지 측정합니다. 파워의 핵심 수치입니다.</p>
+            </div>
+            <div class="f-card">
+                <div class="f-icon">🔄</div>
+                <h4>손목 회전 속도 (dps)</h4>
+                <p>정교한 릴리즈와 페이스 컨트롤을 위한 회전 에너지를 직관적인 수치로 보여줍니다.</p>
+            </div>
+            <div class="f-card">
+                <div class="f-icon">🛑</div>
+                <h4>손 감속 효율</h4>
+                <p>스윙 중 몸이 멈추면서 클럽 헤드로 에너지가 얼마나 잘 전이되는지 평가합니다. 비거리의 비밀입니다.</p>
+            </div>
+            <div class="f-card">
+                <div class="f-icon">📈</div>
+                <h4>타이밍 & 릴리스</h4>
+                <p>임팩트 타이밍 그래프로 힘이 손실되는 구간(캐스팅 등)을 찾아 시각적으로 보여줍니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="three-d">
+        <div class="three-d-content">
+            <div class="three-d-text">
+                <span class="mode-tag tag-dist" style="background: rgba(41, 121, 255, 0.1); color: var(--accent-blue);">3D Tracking</span>
+                <h2 style="font-size: 36px; margin-bottom: 24px;">3D 스윙 궤적 분석</h2>
+                <p style="color: var(--text-sub); font-size: 18px; margin-bottom: 30px;">
+                    단순한 숫자 데이터를 넘어, 당신의 스윙 궤적을 3D 공간에서 재구성합니다. 백스윙 탑에서의 위치, 다운스윙의 경로, 임팩트 후의 팔로우스루까지 입체적으로 분석하여 완벽한 모션을 제안합니다.
+                </p>
+                <ul style="list-style: none; color: var(--text-sub);">
+                    <li style="margin-bottom: 12px;">✅ 자이로스코프 기반 초정밀 궤적 복원</li>
+                    <li style="margin-bottom: 12px;">✅ 실시간 3D 뷰어 및 멀티 앵글 분석</li>
+                    <li>✅ 프로 선수의 궤적과 비교 데이터 제공</li>
+                </ul>
+            </div>
+            <div class="three-d-img">
+                <img src="3d_01.jpg" alt="3D Swing Analysis">
+            </div>
+        </div>
+    </section>
+
+    <section class="modes">
+        <!-- Distance Mode -->
+        <div class="mode-row">
+            <div class="mode-text">
+                <span class="mode-tag tag-dist">Distance Mode</span>
+                <h2>파워와 에너지 전이 극대화</h2>
+                <p>가속도, 회전 속도, 감속 효율을 중점적으로 모니터링합니다. 임팩트 중심의 타이밍 그래프 관전 포인트입니다.</p>
+            </div>
+            <div class="mode-img">
+                <img src="distance_01.jpg" class="img-mobile" alt="Distance Analysis">
+            </div>
+        </div>
+        <div class="mode-row">
+            <div class="mode-text">
+                <h2>실시간 기록 확인</h2>
+                <p>매 스윙 후 워치와 연동된 앱에서 상세 숫자를 즉시 확인할 수 있습니다.</p>
+            </div>
+            <div class="mode-img">
+                <img src="distance_02.jpg" class="img-mobile" alt="Distance History">
+            </div>
+        </div>
+
+        <!-- Tempo Mode -->
+        <div class="mode-row">
+            <div class="mode-text">
+                <span class="mode-tag tag-tempo">Tempo Mode</span>
+                <h2>흔들리지 않는 스윙 리듬</h2>
+                <p>백스윙과 다운스윙의 비율을 정확한 가이드 수치로 확인하세요. 메트로놈 기능과 함께 일관된 타이밍을 훈련할 수 있습니다.</p>
+            </div>
+            <div class="mode-img">
+                <img src="tempo_01.jpg" class="img-mobile" alt="Tempo Analysis">
+            </div>
+        </div>
+        <div class="mode-row">
+            <div class="mode-text">
+                <h2>리듬 데이터 축적</h2>
+                <p>나만의 고유한 템포 프로필을 만들어 필드에서도 일관된 샷을 구현하세요.</p>
+            </div>
+            <div class="mode-img">
+                <img src="tempo_02.jpg" class="img-mobile" alt="Tempo Profile">
+            </div>
+        </div>
+
+        <!-- Putter Mode -->
+        <div class="mode-row">
+            <div class="mode-text">
+                <span class="mode-tag tag-putt">Putter Mode</span>
+                <h2>정교한 거리감과 터치</h2>
+                <p>퍼팅 스트로크를 분석하여 예상 굴림 거리를 직관적으로 띄워줍니다. 섬세한 감각을 시각화하세요.</p>
+            </div>
+            <div class="mode-img">
+                <img src="putt_01.jpg" class="img-mobile" alt="Putter Analysis">
+            </div>
+        </div>
+        <div class="mode-row">
+            <div class="mode-text">
+                <h2>퍼팅 궤적 추적</h2>
+                <p>헤드의 흔들림과 손목의 사용도를 분석하여 직선적인 스트로크를 완성합니다.</p>
+            </div>
+            <div class="mode-img">
+                <img src="putt_02.jpg" class="img-mobile" alt="Putter Stroke">
+            </div>
+        </div>
+        <div class="mode-row">
+            <div class="mode-text">
+                <h2>일관성 점검</h2>
+                <p>성공적인 퍼팅을 위한 데이터 기반의 피드백을 실시간으로 제공합니다.</p>
+            </div>
+            <div class="mode-img">
+                <img src="putt_03.jpg" class="img-mobile" alt="Putter Statistics">
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 MotionTrace Pro. All rights reserved.</p>
+    </footer>
+
 </body>
+
 </html>
